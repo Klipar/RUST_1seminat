@@ -11,6 +11,12 @@ pub fn get_greeting() -> String {
     String::from("Hello from the quizzer library!")
 }
 
+impl Question {
+    fn save(&self) {
+        println!("Sawed question: {}", self.question);
+    }
+}
+
 pub fn get_question() -> Vec<Question> {
     let mut questions = Vec::new();
     questions.push(Question {
