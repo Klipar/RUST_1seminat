@@ -1,6 +1,6 @@
 //! Quizzer binary - main entry point
 
-use quizzer::{Question, get_question};
+use quizzer::{Question, import_from_json};
 
 use clap::Parser;
 use std::process;
@@ -74,16 +74,16 @@ fn main() {
                 options: answers.try_into().expect("Потрібно рівно 4 елементи"),
             };
 
-            question.save();
+            question.append_to_json();
 
             println!("Додано новий запис:");
             // println!("{:?}", question);
         }
     } else {
-        let question_set =  get_question();
+        let question_set =  import_from_json();
         let mut true_answers = 0;
         for q in &question_set{
-            println!("{}\nOptions:", q.question);
+            println!("\n{}\nOptions:", q.question);
 
             let mut indices: Vec<usize> = (0..q.options.len()).collect();
             indices.shuffle(&mut thread_rng());
@@ -102,6 +102,6 @@ fn main() {
                 true_answers+=1;
             }
         }
-        println!("your score: {}/{}", true_answers, question_set.len());
+        println!("\nyour score: {}/{}", true_answers, question_set.len());
     }
 }
